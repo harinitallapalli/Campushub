@@ -33,7 +33,7 @@ function formatDue(dateStr?: string) {
 }
 
 export default function Dashboard() {
-  const { studentId, user } = useApp();
+  const { studentId } = useApp();
   const navigate = useNavigate();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -41,10 +41,6 @@ export default function Dashboard() {
   const [facultyRes, setFacultyRes] = useState<FacultyResource[]>([]);
   const [personalRes, setPersonalRes] = useState<PersonalResource[]>([]);
   const [loading, setLoading] = useState(true);
-
-  const hour = new Date().getHours();
-  const greetingTime = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
-  const studentFirstName = user?.full_name?.split(' ')[0] || 'Alex';
 
   useEffect(() => {
     if (!studentId) {
@@ -102,25 +98,11 @@ export default function Dashboard() {
 
   return (
     <div>
-      {/* ── Spendly-inspired Greeting & Actions ──────────────────────── */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '14px' }}>
+      {/* ── Page Header & Actions ──────────────────────── */}
+      <div className="page-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
         <div>
-          <h1 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', margin: '0 0 4px 0' }}>
-            Good{' '}
-            <span
-              style={{
-                background: 'linear-gradient(135deg, #4f46e5 0%, #ec4899 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              {greetingTime}
-            </span>
-            , {studentFirstName}
-          </h1>
-          <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', margin: 0 }}>
-            Here is your daily coursework progress, attendance health, and upcoming schedule.
-          </p>
+          <h1 className="page-title">Academic Dashboard</h1>
+          <p className="page-description">Semester coursework summary, pending deadlines, and upcoming campus events.</p>
         </div>
 
         <div style={{ display: 'flex', gap: '10px' }}>
@@ -129,7 +111,6 @@ export default function Dashboard() {
             className="btn btn-secondary"
             onClick={handleExportCalendar}
             id="dashboard-export-ics"
-            style={{ borderRadius: '10px' }}
           >
             Export Deadlines (.ics)
           </button>
@@ -137,93 +118,9 @@ export default function Dashboard() {
             className="btn btn-primary"
             onClick={() => navigate('/tasks')}
             id="add-task-btn"
-            style={{ borderRadius: '10px', padding: '8px 18px' }}
           >
             + Add Task
           </button>
-        </div>
-      </div>
-
-      {/* ── Motivational Tip Banner (Spendly-styled) ────────────────── */}
-      <div
-        style={{
-          backgroundColor: '#fff7ed',
-          border: '1px solid #fed7aa',
-          borderRadius: '14px',
-          padding: '12px 18px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-          marginBottom: '20px',
-          color: '#9a3412',
-          fontSize: '0.88rem',
-        }}
-      >
-        <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>💡</span>
-        <div style={{ flex: 1, lineHeight: 1.4 }}>
-          <strong>Academic Focus:</strong> Daily coursework tracking and 75%+ attendance ensure full semester exam eligibility. You are on track!
-        </div>
-      </div>
-
-      {/* ── Spendly-inspired Gradient Hero Metric Banner ─────────────── */}
-      <div
-        style={{
-          background: 'linear-gradient(135deg, #3b82f6 0%, #4f46e5 45%, #7c3aed 100%)',
-          borderRadius: '18px',
-          padding: '26px 30px',
-          color: '#ffffff',
-          position: 'relative',
-          overflow: 'hidden',
-          boxShadow: '0 10px 25px -4px rgba(79, 70, 229, 0.35)',
-          marginBottom: '22px',
-        }}
-      >
-        {/* Decorative translucent background rings */}
-        <div style={{ position: 'absolute', right: '-40px', top: '-40px', width: '220px', height: '220px', borderRadius: '50%', background: 'rgba(255, 255, 255, 0.08)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', right: '140px', bottom: '-70px', width: '200px', height: '200px', borderRadius: '50%', background: 'rgba(255, 255, 255, 0.05)', pointerEvents: 'none' }} />
-
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.07em', color: 'rgba(255,255,255,0.85)', fontWeight: 700, marginBottom: '6px' }}>
-            Overall Academic Attendance
-          </div>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '14px', marginBottom: '20px', flexWrap: 'wrap' }}>
-            <div style={{ fontSize: '3rem', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1 }}>
-              87.4%
-            </div>
-            <span
-              style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.22)',
-                backdropFilter: 'blur(6px)',
-                padding: '4px 12px',
-                borderRadius: '20px',
-                fontSize: '0.8rem',
-                fontWeight: 600,
-                color: '#ffffff',
-              }}
-            >
-              ✓ Safe Attendance Zone (&gt;75%)
-            </span>
-          </div>
-
-          {/* Sub-metric Glass Cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '12px' }}>
-            <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.12)', backdropFilter: 'blur(8px)', padding: '10px 14px', borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-              <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>Today's Classes</div>
-              <div style={{ fontSize: '1.15rem', fontWeight: 700, marginTop: '2px' }}>3 Lectures</div>
-            </div>
-            <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.12)', backdropFilter: 'blur(8px)', padding: '10px 14px', borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-              <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>Pending Tasks</div>
-              <div style={{ fontSize: '1.15rem', fontWeight: 700, marginTop: '2px' }}>{stats?.pending_tasks ?? 2} Deadlines</div>
-            </div>
-            <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.12)', backdropFilter: 'blur(8px)', padding: '10px 14px', borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-              <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>Active Courses</div>
-              <div style={{ fontSize: '1.15rem', fontWeight: 700, marginTop: '2px' }}>4 Subjects</div>
-            </div>
-            <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.12)', backdropFilter: 'blur(8px)', padding: '10px 14px', borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-              <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>Term Target</div>
-              <div style={{ fontSize: '1.15rem', fontWeight: 700, marginTop: '2px' }}>Fall 2026</div>
-            </div>
-          </div>
         </div>
       </div>
 

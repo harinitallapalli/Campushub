@@ -31,22 +31,7 @@ export default function Sidebar({ userName, userSub, role }: SidebarProps) {
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        <div style={{ position: 'relative' }}>
-          <div className="sidebar-brand-mark">CH</div>
-          <span
-            style={{
-              position: 'absolute',
-              top: '-3px',
-              right: '-3px',
-              width: '10px',
-              height: '10px',
-              backgroundColor: '#fbbf24',
-              borderRadius: '50%',
-              border: '2px solid #ffffff',
-              boxShadow: '0 2px 4px rgba(251, 191, 36, 0.4)',
-            }}
-          />
-        </div>
+        <div className="sidebar-brand-mark">CH</div>
         <div>
           <div className="sidebar-brand-title">CampusHub</div>
           <div className="sidebar-brand-sub">
