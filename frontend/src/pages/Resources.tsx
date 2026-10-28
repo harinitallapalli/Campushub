@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from 'react';
-import { useApp } from '../context';
 import {
   listMyPersonalResources,
   createMyPersonalResource,
@@ -165,7 +164,6 @@ function PersonalResourceModal({
 }
 
 export default function Resources() {
-  const { user } = useApp();
   const [activeTab, setActiveTab] = useState<'personal' | 'faculty'>('personal');
 
   // Personal Resources State
